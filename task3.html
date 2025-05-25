@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Advanced Styling and JavaScript</title>
+  <style>
+    /* Base styles */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      background-color: #eef2f3;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 90%;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #joke, #question {
+      font-size: 1.2rem;
+      margin: 15px 0;
+    }
+
+    /* Responsive */
+    @media (min-width: 600px) {
+      .container {
+        width: 80%;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .container {
+        width: 60%;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Advanced Styling & JavaScript</h1>
+
+    <!-- Quiz Section -->
+    <h2>Quiz</h2>
+    <div id="question"></div>
+    <button onclick="nextQuestion()">Next Question</button>
+
+    <hr>
+
+    <!-- API Section -->
+    <h2>Joke Generator</h2>
+    <button onclick="getJoke()">Get a Joke</button>
+    <p id="joke"></p>
+  </div>
+
+  <script>
+    // Quiz Data and Logic
+    const quiz = [
+      { question: "What is 2 + 2?", answer: "4" },
+      { question: "What is the capital of France?", answer: "Paris" },
+      { question: "Which language runs in a web browser?", answer: "JavaScript" },
+    ];
+    let current = 0;
+
+    function showQuestion() {
+      document.getElementById("question").innerHTML = `<strong>${quiz[current].question}</strong>`;
+    }
+
+    function nextQuestion() {
+      current = (current + 1) % quiz.length;
+      showQuestion();
+    }
+
+    showQuestion(); // Initialize on load
+
+    // Fetch Joke from API
+    async function getJoke() {
+      const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+      const data = await response.json();
+      document.getElementById("joke").innerText = `${data.setup} - ${data.punchline}`;
+    }
+  </script>
+</body>
+</html>
